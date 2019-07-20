@@ -1,0 +1,14 @@
+{
+    "version": "0.1.0",
+    "dependencies": {
+        "body-parser": "~1.10.1",
+        "ent": "^2.2.0",
+        "express": "^4.17.1",
+        "morgan": "^1.9.1",
+        "pug": "^2.0.4",
+        "sass": "~1.22.5",
+        "socket.io": "~2.2.0"
+    },
+    "author": "R3tr0",
+    "description": "Une version appliacation d'Atsukim."
+}
