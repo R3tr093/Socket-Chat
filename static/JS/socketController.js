@@ -1,5 +1,19 @@
 var socket = io.connect('http://localhost:8080');
 
+// regen messages.
+
+socket.on('recup', function(pseudos,messages,param) {
+ 
+
+  var chat = document.getElementById('chatFrame');
+ 
+  chat.insertAdjacentHTML('afterbegin', '<p class="messagesElts"> <span class="PseudoElts">' + pseudos + " : " + '</span>' + messages + '<br><br> <span class="dateElts"> Envoyé à ' + param +  '</span></p><hr>');
+
+
+
+
+
+})
 
 var sendBtn = document.getElementById('sendBtn');
 
@@ -12,7 +26,12 @@ while(pseudo.length < 5)
   pseudo = prompt(" Entrez votre pseudo (5 caractères min ) : ")
 }
 
+
+
 socket.emit('new_entrance',pseudo);
+
+
+
 
 
 document.getElementById('log').textContent = "Vous êtes connecté sous le pseudo : " + pseudo;
@@ -56,6 +75,9 @@ socket.on('logOut', function(message) {
 
 
   });
+
+
+
 
 
   sendBtn.addEventListener('click',function(){

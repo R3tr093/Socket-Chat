@@ -22,6 +22,39 @@ var io = require('socket.io').listen(server);
 var ent = require('ent');
 
 
+
+// Set internal clock
+
+
+var time = "00:00";
+
+function setClock ()
+{
+  var d = new Date();
+
+  var hour = d.getHours();
+
+  var min = d.getMinutes();
+
+  if(hour < 10)
+  {
+    hour = "0" + String(hour);
+  }
+
+  if(min < 10)
+  {
+    min = "0" + String(min);
+  }
+
+
+   time = String(hour) + ":" + String(min);
+}
+
+setClock();
+
+setInterval(setClock,1000)
+
+
 // SET STATIC FOLDER
 
 app.use(morgan('combined'))
@@ -34,11 +67,24 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false });
 // Set an array with all client pseudo connected.
 var allClient = [];
 
+
+// wait for it... ur not prepared.
+var pseudoData = [];
+var messagesData = [];
+var timeData = [];
+
 var pseudo = "guest";
 
 
 io.on('connection', function (socket) {
   
+
+    for ( var i = 0; i < messagesData.length;i++)
+    {
+        socket.emit('recup', pseudoData[i],messagesData[i],timeData[i]);
+    }
+
+
    
 
 
@@ -52,6 +98,9 @@ io.on('connection', function (socket) {
         socket.broadcast.emit('loggedIn', " >>> " + socket.pseudo + " vient de se connecter.");
         socket.broadcast.emit('userCount', String(allClient.length) + " utilisateurs connectés.");
         socket.emit('userCount', String(allClient.length) + " utilisateurs connectés.");
+
+           
+        
         
 
     })
@@ -62,6 +111,13 @@ io.on('connection', function (socket) {
         message = ent.encode(message);
         socket.broadcast.emit('message',socket.pseudo, message);
         socket.emit('message', socket.pseudo, message);
+
+
+        // U dont believe it, but yeah it's my db... problem ?
+        pseudoData.push(socket.pseudo);
+        messagesData.push(message);
+        timeData.push(time);
+
 
     })
 
