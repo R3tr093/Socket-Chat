@@ -4,4 +4,4 @@
 
 <p> <i> npm install </i>  Ceci installera les dépendences nécessaires au chat.</p>
 
-<p> Ensuite lance la commande <i>npm start</i> et voilà c'est fini. </p>
+<p> Ensuite lance la commande <i>npm start</i> et rends toi  sur localhost:8080 .</p>
